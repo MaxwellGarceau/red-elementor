@@ -10,9 +10,14 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+define( 'RED_ELEMENTOR_PATH', plugin_dir_path(__FILE__) );
+define( 'RED_ELEMENTOR_TEXT_DOMAIN', 'red-elementor' );
 
 // This file is pretty much a boilerplate WordPress plugin.
 // It does very little except including wp-widget.php
+
+require RED_ELEMENTOR_PATH . '/classes/red-config.php';
+require RED_ELEMENTOR_PATH . '/uaelementor-integration/red-widget-list.php';
 
 class ElementorCustomElement {
 
@@ -39,7 +44,7 @@ class ElementorCustomElement {
          $widget_file = 'plugins/elementor/red-video-gallery.php';
          $template_file = locate_template($widget_file);
          if ( !$template_file || !is_readable( $template_file ) ) {
-            $template_file = plugin_dir_path(__FILE__).'red-video-gallery/widgets/red-video-gallery.php';
+            $template_file = plugin_dir_path(__FILE__) . '/modules/red-video-gallery.php';
          }
          if ( $template_file && is_readable( $template_file ) ) {
             require_once $template_file;

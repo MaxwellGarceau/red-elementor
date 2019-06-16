@@ -5,7 +5,7 @@
  * @package UAEL
  */
 
-// namespace UltimateElementor\Modules\RedVideoGallery\Widgets;
+namespace UltimateElementor\Modules\RedVideoGallery\Widgets;
 
 
 // Elementor Classes.
@@ -2008,6 +2008,9 @@ class Red_Video_Gallery extends Common_Widget {
 								<div <?php echo $this->get_render_attribute_string( 'video-grid-item' . $index ); ?>>
 									<?php $this->get_play_button(); ?>
 								</div>
+								<div>
+									Video Title
+								</div>
 
 								<?php $this->get_tag( $item ); ?>
 
@@ -2223,4 +2226,4 @@ class Red_Video_Gallery extends Common_Widget {
 	}
 
 }
-Plugin::instance()->widgets_manager->register_widget( new Red_Video_Gallery() );
+\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Red_Video_Gallery() );
