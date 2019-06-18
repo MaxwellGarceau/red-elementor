@@ -11,6 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'RED_ELEMENTOR_PATH', plugin_dir_path(__FILE__) );
+define( 'RED_ELEMENTOR_URL', plugin_dir_url(__FILE__) );
 define( 'RED_ELEMENTOR_TEXT_DOMAIN', 'red-elementor' );
 
 // This file is pretty much a boilerplate WordPress plugin.
@@ -29,8 +30,9 @@ class ElementorCustomElement {
       return self::$instance;
    }
 
-   public function init(){
-      add_action( 'elementor/widgets/widgets_registered', array( $this, 'widgets_registered' ) );
+   public function init() {
+      add_action( 'elementor/widgets/widgets_registered', array( $this, 'widgets_registered' ), 9999999999 );
+      add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_widget_scripts' ) );
    }
 
    public function widgets_registered() {
@@ -42,14 +44,18 @@ class ElementorCustomElement {
          // If no theme overrides are found we use the default one in this plugin.
 
          $widget_file = 'plugins/elementor/red-video-gallery.php';
-         $template_file = locate_template($widget_file);
+         $template_file = locate_template( $widget_file );
          if ( !$template_file || !is_readable( $template_file ) ) {
-            $template_file = plugin_dir_path(__FILE__) . '/modules/red-video-gallery.php';
+            $template_file = plugin_dir_path( __FILE__ ) . '/modules/red-video-gallery.php';
          }
          if ( $template_file && is_readable( $template_file ) ) {
             require_once $template_file;
          }
       // }
+   }
+
+   public function register_widget_scripts() {
+     wp_enqueue_script( 'red-uaelementor-integration', RED_ELEMENTOR_URL . '/uaelementor-integration/js/red-uaelementor-integration.js', array( 'jquery' ) );
    }
 }
 
