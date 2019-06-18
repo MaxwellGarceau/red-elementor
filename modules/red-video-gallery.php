@@ -125,6 +125,7 @@ class Red_Video_Gallery extends Common_Widget {
 		$this->register_style_title_filter_controls();
 		$this->register_style_filter_controls();
 		$this->register_style_play_controls();
+		// $this->register_style_text_controls();
 		$this->register_style_caption_controls();
 		$this->register_style_navigation_controls();
 	}
@@ -202,14 +203,25 @@ class Red_Video_Gallery extends Common_Widget {
 						],
 						[
 							'name'        => 'title',
-							'label'       => __( 'Caption', 'uael' ),
+							'label'       => __( 'Video Title', 'uael' ),
 							'type'        => Controls_Manager::TEXT,
 							'default'     => '',
 							'label_block' => true,
 							'dynamic'     => [
 								'active' => true,
 							],
-							'title'       => __( 'This title will be visible on hover.', 'uael' ),
+							'title'       => __( 'This title will always be visible.', 'uael' ),
+						],
+						[
+							'name'        => 'subtext',
+							'label'       => __( 'Subtext', 'uael' ),
+							'type'        => Controls_Manager::TEXT,
+							'default'     => 'Learn More / Watch Now',
+							'label_block' => true,
+							'dynamic'     => [
+								'active' => true,
+							],
+							'title'       => __( 'This subtext will be visible underneath the caption.', 'uael' ),
 						],
 						[
 							'name'        => 'tags',
@@ -311,6 +323,8 @@ class Red_Video_Gallery extends Common_Widget {
 			);
 
 		$this->end_controls_section();
+
+		// $this->register_text_controls();
 	}
 
 	/**
@@ -1423,7 +1437,7 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_control(
 				'caption_typo',
 				[
-					'label'     => __( 'Caption', 'uael' ),
+					'label'     => __( 'Video Text', 'uael' ),
 					'type'      => Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1432,9 +1446,9 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_control(
 				'show_caption',
 				[
-					'label'        => __( 'Show Caption on Hover', 'uael' ),
+					'label'        => __( 'Show Video Title', 'uael' ),
 					'type'         => Controls_Manager::SWITCHER,
-					'default'      => 'no',
+					'default'      => 'yes',
 					'return_value' => 'yes',
 					'label_off'    => __( 'No', 'uael' ),
 					'label_on'     => __( 'Yes', 'uael' ),
@@ -1444,7 +1458,7 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_control(
 				'caption_color',
 				[
-					'label'     => __( 'Caption Color', 'uael' ),
+					'label'     => __( 'Video Title Color', 'uael' ),
 					'type'      => Controls_Manager::COLOR,
 					'default'   => '#ffffff',
 					'selectors' => [
@@ -1464,6 +1478,45 @@ class Red_Video_Gallery extends Common_Widget {
 					'scheme'    => Scheme_Typography::TYPOGRAPHY_4,
 					'condition' => [
 						'show_caption' => 'yes',
+					],
+				]
+			);
+
+			$this->add_control(
+				'show_subtext',
+				[
+					'label'        => __( 'Show Subtext', 'uael' ),
+					'type'         => Controls_Manager::SWITCHER,
+					'default'      => 'yes',
+					'return_value' => 'yes',
+					'label_off'    => __( 'No', 'uael' ),
+					'label_on'     => __( 'Yes', 'uael' ),
+				]
+			);
+
+			$this->add_control(
+				'subtext_color',
+				[
+					'label'     => __( 'Subtext Color', 'uael' ),
+					'type'      => Controls_Manager::COLOR,
+					'default'   => '#ffffff',
+					'selectors' => [
+						'{{WRAPPER}} .red-video__subtext' => 'color: {{VALUE}};',
+					],
+					'condition' => [
+						'show_subtext' => 'yes',
+					],
+				]
+			);
+
+			$this->add_group_control(
+				Group_Control_Typography::get_type(),
+				[
+					'name'      => 'subtext_typography',
+					'selector'  => '{{WRAPPER}} .red-video__subtext',
+					'scheme'    => Scheme_Typography::TYPOGRAPHY_4,
+					'condition' => [
+						'show_subtext' => 'yes',
 					],
 				]
 			);
@@ -1681,6 +1734,194 @@ class Red_Video_Gallery extends Common_Widget {
 
 		$this->end_controls_section();
 	}
+
+	// public function register_style_text_controls() {
+	//
+	// 	$this->start_controls_section(
+	// 		'section_title_style',
+	// 		[
+	// 			'label' => __( 'Title', 'elementor' ),
+	// 			'tab' => Controls_Manager::TAB_STYLE,
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'title_color',
+	// 		[
+	// 			'label' => __( 'Text Color', 'elementor' ),
+	// 			'type' => Controls_Manager::COLOR,
+	// 			'scheme' => [
+	// 				'type' => Scheme_Color::get_type(),
+	// 				'value' => Scheme_Color::COLOR_1,
+	// 			],
+	// 			'selectors' => [
+	// 				// Stronger selector to avoid section style from overwriting
+	// 				'{{WRAPPER}}.elementor-widget-heading .elementor-heading-title' => 'color: {{VALUE}};',
+	// 			],
+	// 		]
+	// 	);
+	//
+	// 	$this->add_group_control(
+	// 		Group_Control_Typography::get_type(),
+	// 		[
+	// 			'name' => 'typography',
+	// 			'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+	// 			'selector' => '{{WRAPPER}} .elementor-heading-title',
+	// 		]
+	// 	);
+	//
+	// 	$this->add_group_control(
+	// 		Group_Control_Text_Shadow::get_type(),
+	// 		[
+	// 			'name' => 'text_shadow',
+	// 			'selector' => '{{WRAPPER}} .elementor-heading-title',
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'blend_mode',
+	// 		[
+	// 			'label' => __( 'Blend Mode', 'elementor' ),
+	// 			'type' => Controls_Manager::SELECT,
+	// 			'options' => [
+	// 				'' => __( 'Normal', 'elementor' ),
+	// 				'multiply' => 'Multiply',
+	// 				'screen' => 'Screen',
+	// 				'overlay' => 'Overlay',
+	// 				'darken' => 'Darken',
+	// 				'lighten' => 'Lighten',
+	// 				'color-dodge' => 'Color Dodge',
+	// 				'saturation' => 'Saturation',
+	// 				'color' => 'Color',
+	// 				'difference' => 'Difference',
+	// 				'exclusion' => 'Exclusion',
+	// 				'hue' => 'Hue',
+	// 				'luminosity' => 'Luminosity',
+	// 			],
+	// 			'selectors' => [
+	// 				'{{WRAPPER}} .elementor-heading-title' => 'mix-blend-mode: {{VALUE}}',
+	// 			],
+	// 			'separator' => 'none',
+	// 		]
+	// 	);
+	//
+	// 	$this->end_controls_section();
+	// }
+
+	// public function register_text_controls() {
+	// 	$this->start_controls_section(
+	// 		'section_title',
+	// 		[
+	// 			'label' => __( 'Title', 'elementor' ),
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'title',
+	// 		[
+	// 			'label' => __( 'Title', 'elementor' ),
+	// 			'type' => Controls_Manager::TEXTAREA,
+	// 			'dynamic' => [
+	// 				'active' => true,
+	// 			],
+	// 			'placeholder' => __( 'Enter your title', 'elementor' ),
+	// 			'default' => __( 'Add Your Heading Text Here', 'elementor' ),
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'link',
+	// 		[
+	// 			'label' => __( 'Link', 'elementor' ),
+	// 			'type' => Controls_Manager::URL,
+	// 			'dynamic' => [
+	// 				'active' => true,
+	// 			],
+	// 			'default' => [
+	// 				'url' => '',
+	// 			],
+	// 			'separator' => 'before',
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'size',
+	// 		[
+	// 			'label' => __( 'Size', 'elementor' ),
+	// 			'type' => Controls_Manager::SELECT,
+	// 			'default' => 'default',
+	// 			'options' => [
+	// 				'default' => __( 'Default', 'elementor' ),
+	// 				'small' => __( 'Small', 'elementor' ),
+	// 				'medium' => __( 'Medium', 'elementor' ),
+	// 				'large' => __( 'Large', 'elementor' ),
+	// 				'xl' => __( 'XL', 'elementor' ),
+	// 				'xxl' => __( 'XXL', 'elementor' ),
+	// 			],
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'header_size',
+	// 		[
+	// 			'label' => __( 'HTML Tag', 'elementor' ),
+	// 			'type' => Controls_Manager::SELECT,
+	// 			'options' => [
+	// 				'h1' => 'H1',
+	// 				'h2' => 'H2',
+	// 				'h3' => 'H3',
+	// 				'h4' => 'H4',
+	// 				'h5' => 'H5',
+	// 				'h6' => 'H6',
+	// 				'div' => 'div',
+	// 				'span' => 'span',
+	// 				'p' => 'p',
+	// 			],
+	// 			'default' => 'h2',
+	// 		]
+	// 	);
+	//
+	// 	$this->add_responsive_control(
+	// 		'align',
+	// 		[
+	// 			'label' => __( 'Alignment', 'elementor' ),
+	// 			'type' => Controls_Manager::CHOOSE,
+	// 			'options' => [
+	// 				'left' => [
+	// 					'title' => __( 'Left', 'elementor' ),
+	// 					'icon' => 'fa fa-align-left',
+	// 				],
+	// 				'center' => [
+	// 					'title' => __( 'Center', 'elementor' ),
+	// 					'icon' => 'fa fa-align-center',
+	// 				],
+	// 				'right' => [
+	// 					'title' => __( 'Right', 'elementor' ),
+	// 					'icon' => 'fa fa-align-right',
+	// 				],
+	// 				'justify' => [
+	// 					'title' => __( 'Justified', 'elementor' ),
+	// 					'icon' => 'fa fa-align-justify',
+	// 				],
+	// 			],
+	// 			'default' => '',
+	// 			'selectors' => [
+	// 				'{{WRAPPER}}' => 'text-align: {{VALUE}};',
+	// 			],
+	// 		]
+	// 	);
+	//
+	// 	$this->add_control(
+	// 		'view',
+	// 		[
+	// 			'label' => __( 'View', 'elementor' ),
+	// 			'type' => Controls_Manager::HIDDEN,
+	// 			'default' => 'traditional',
+	// 		]
+	// 	);
+	//
+	// 	$this->end_controls_section();
+	// }
 
 
 
@@ -1969,14 +2210,14 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_render_attribute(
 				'video-grid-item' . $index,
 				[
-					'class' => 'uael-vg__play',
+					'class' => 'uael-vg__play red-video__text',
 				]
 			);
 
 			$this->add_render_attribute(
 				'video-container-link' . $index,
 				[
-					'class' => 'elementor-clickable uael-vg__play_full',
+					'class' => 'elementor-clickable uael-vg__play_full red-video__play-full',
 					'href'  => $item['video_url'],
 				]
 			);
@@ -2003,13 +2244,15 @@ class Red_Video_Gallery extends Common_Widget {
 						<div class="uael-video__content-wrap">
 							<div class="uael-video__content">
 
-								<?php $this->get_caption( $item ); ?>
-
-								<div <?php echo $this->get_render_attribute_string( 'video-grid-item' . $index ); ?>>
-									<?php $this->get_play_button(); ?>
+								<div class="red-video__title">
+									<div <?php echo $this->get_render_attribute_string( 'video-grid-item' . $index ); ?>>
+										<?php $this->get_play_button(); ?>
+									</div>
+									<?php $this->get_caption( $item ); ?>
 								</div>
+
 								<div>
-									Video Title
+									<?php $this->get_subtext( $item ); ?>
 								</div>
 
 								<?php $this->get_tag( $item ); ?>
@@ -2045,7 +2288,33 @@ class Red_Video_Gallery extends Common_Widget {
 		}
 		?>
 
-		<h4 class="uael-video__caption"><?php echo $item['title']; ?></h4>
+		<h4 class="uael-video__caption red-video__caption"><?php echo $item['title']; ?></h4>
+
+		<?php
+	}
+
+	/**
+	 * Returns the Sub Text HTML.
+	 *
+	 * @param Array $item Current video array.
+	 * @since 1.5.0
+	 * @access public
+	 */
+	public function get_subtext( $item ) {
+
+		$settings = $this->get_settings_for_display();
+		$subtext = $item['subtext'];
+
+		if ( '' == $subtext ) {
+			$subtext = 'Learn More / Watch Now';
+		}
+
+		if ( 'yes' != $settings['show_subtext'] ) {
+			return;
+		}
+		?>
+
+		<p class="red-video__subtext"><?php echo $subtext; ?></p>
 
 		<?php
 	}

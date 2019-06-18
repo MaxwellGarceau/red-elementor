@@ -33,6 +33,7 @@ class ElementorCustomElement {
    public function init() {
       add_action( 'elementor/widgets/widgets_registered', array( $this, 'widgets_registered' ), 9999999999 );
       add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_widget_scripts' ) );
+      add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_widget_styles' ) );
    }
 
    public function widgets_registered() {
@@ -56,6 +57,9 @@ class ElementorCustomElement {
 
    public function register_widget_scripts() {
      wp_enqueue_script( 'red-uaelementor-integration', RED_ELEMENTOR_URL . '/uaelementor-integration/js/red-uaelementor-integration.js', array( 'jquery' ) );
+   }
+   public function register_widget_styles() {
+     wp_enqueue_style( 'red-video-gallery', RED_ELEMENTOR_URL . '/assets/css/modules/red-video-gallery.css' );
    }
 }
 
