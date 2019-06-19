@@ -273,6 +273,35 @@ class Red_Video_Gallery extends Common_Widget {
 								'custom_placeholder' => 'yes',
 							],
 						],
+						[
+							'name'         => 'slide_overlay',
+							'label'        => __( 'Slide Overlay', 'uael' ),
+							'type'         => Controls_Manager::COLOR,
+							'default'      => '',
+							'scheme'    => [
+								'type'  => Scheme_Color::get_type(),
+								'value' => Scheme_Color::COLOR_4,
+							],
+							// 'label_on'     => __( 'Yes', 'uael' ),
+							// 'label_off'    => __( 'No', 'uael' ),
+							// 'return_value' => 'yes',
+						],
+						// [
+						// 	// 'label'     => __( 'Arrows Color', 'uael' ),
+						// 	// 'type'      => Controls_Manager::COLOR,
+						// 	'selectors' => [
+						// 		'{{WRAPPER}} .slick-slider .slick-prev:before, {{WRAPPER}} .slick-slider .slick-next:before' => 'color: {{VALUE}};',
+						// 		'{{WRAPPER}} .slick-slider .slick-arrow' => 'border-color: {{VALUE}}; border-style: solid;',
+						// 		'{{WRAPPER}} .slick-slider .slick-arrow i' => 'color: {{VALUE}};',
+						// 	],
+						// 	'scheme'    => [
+						// 		'type'  => Scheme_Color::get_type(),
+						// 		'value' => Scheme_Color::COLOR_4,
+						// 	],
+						// 	'condition' => [
+						// 		'navigation' => [ 'arrows', 'both' ],
+						// 	],
+						// ]
 					],
 					'default'     => [
 						[
@@ -1415,7 +1444,7 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_control(
 				'overlay_background_color',
 				[
-					'label'     => __( 'Overlay Color', 'uael' ),
+					'label'     => __( 'Default Overlay Color', 'uael' ),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .uael-vg__overlay' => 'background-color: {{VALUE}};',
@@ -1955,8 +1984,10 @@ class Red_Video_Gallery extends Common_Widget {
 			'arrows'         => $show_arrows,
 			'dots'           => $show_dots,
 			'rtl'            => $is_rtl,
-			'prevArrow'      => '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fa fa-angle-left"></i></button>',
-			'nextArrow'      => '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fa fa-angle-right"></i></button>',
+			// 'prevArrow'      => '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fa fa-angle-left"></i></button>',
+			// 'nextArrow'      => '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fa fa-angle-right"></i></button>',
+			'prevArrow'      => '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i><img src="' . RED_ELEMENTOR_URL . 'assets/images/aimsworx_video_nav_button.png' . '"></i></button>',
+			'nextArrow'      => '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i><img src="' . RED_ELEMENTOR_URL . 'assets/images/aimsworx_video_nav_button.png' . '"></i></button>',
 		];
 
 		if ( $settings['gallery_columns_tablet'] || $settings['gallery_columns_mobile'] ) {
@@ -2157,7 +2188,7 @@ class Red_Video_Gallery extends Common_Widget {
 
 		<?php } else { ?>
 			<img class="uael-vg__dummy-image" alt="" />
-			<img class="uael-vg__play-image <?php echo 'elementor-animation-' . $settings['hover_animation_img']; ?>" src="<?php echo $settings['play_img']['url']; ?>" alt="<?php echo Control_Media::get_image_alt( $settings['play_img'] ); ?>"/>
+			<img class="uael-vg__play-image red-vg__play-image <?php echo 'elementor-animation-' . $settings['hover_animation_img']; ?>" src="<?php echo $settings['play_img']['url']; ?>" alt="<?php echo Control_Media::get_image_alt( $settings['play_img'] ); ?>"/>
 
 			<?php
 		}
@@ -2190,6 +2221,7 @@ class Red_Video_Gallery extends Common_Widget {
 		}
 
 		foreach ( $new_gallery as $index => $item ) {
+			$slide_overlay = $item['slide_overlay'];
 
 			$url = $this->get_placeholder_image( $item );
 
@@ -2244,14 +2276,14 @@ class Red_Video_Gallery extends Common_Widget {
 						<div class="uael-video__content-wrap">
 							<div class="uael-video__content">
 
-								<div class="red-video__title">
+								<!-- <div class="red-video__title"> -->
 									<div <?php echo $this->get_render_attribute_string( 'video-grid-item' . $index ); ?>>
 										<?php $this->get_play_button(); ?>
 									</div>
-									<?php $this->get_caption( $item ); ?>
-								</div>
+								<!-- </div> -->
 
 								<div>
+									<?php $this->get_caption( $item ); ?>
 									<?php $this->get_subtext( $item ); ?>
 								</div>
 
@@ -2261,7 +2293,7 @@ class Red_Video_Gallery extends Common_Widget {
 						</div>
 					</a>
 				</div>
-				<div class="uael-vg__overlay"></div>
+				<div class="uael-vg__overlay" style="background-color: <?php echo $slide_overlay; ?>"></div>
 			</div>
 			<?php
 		}
