@@ -3,7 +3,7 @@
 /**
  * Plugin Name: RED Elementor Modules
  * Description: Custom Elementor modules made by RED Earth Design
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: redearth
  * Author URI: https://redearthdesign.com
  * Text Domain: red-elementor
@@ -56,10 +56,12 @@ class ElementorCustomElement {
    }
 
    public function register_widget_scripts() {
-     wp_enqueue_script( 'red-uaelementor-integration', RED_ELEMENTOR_URL . '/uaelementor-integration/js/red-uaelementor-integration.js', array( 'jquery' ) );
+     $plugin_data = get_plugin_data( __FILE__ );
+     wp_enqueue_script( 'red-uaelementor-integration', RED_ELEMENTOR_URL . 'uaelementor-integration/js/red-uaelementor-integration.js', array( 'jquery' ), $plugin_data['Version'] );
    }
    public function register_widget_styles() {
-     wp_enqueue_style( 'red-video-gallery', RED_ELEMENTOR_URL . '/assets/css/modules/red-video-gallery.css' );
+     $plugin_data = get_plugin_data( __FILE__ );
+     wp_enqueue_style( 'red-video-gallery', RED_ELEMENTOR_URL . 'assets/css/modules/red-video-gallery.css', array(), $plugin_data['Version'] );
    }
 }
 
