@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  flex-wrap: wrap;
+  /* min-height: 115px; */
 }
 
 .red-video__title {
@@ -19,6 +19,12 @@
 
 .elementor-widget-red-video-gallery .uael-video-gallery-wrap .red-video__text {
   text-align: left;
+  padding: 0 15px;
+
+  /* Flex settings */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .elementor-widget-red-video-gallery .uael-video-gallery-wrap .red-video__play-full {
@@ -39,11 +45,12 @@
 
 @media (max-width: 768px) {
   .elementor-widget-red-video-gallery .uael-video-gallery-wrap .red-video__play-full {
-    padding: 30px 15px;
+    padding: 30px 15px 15px;
     justify-content: center;
   }
   .elementor-widget-red-video-gallery .uael-video-gallery-wrap .uael-video__content {
     flex-direction: column-reverse;
+    flex-wrap: wrap;
   }
   .red-vg__play-image {
     margin: 5px auto 0;
@@ -76,6 +83,7 @@
   width: unset !important;
   bottom: unset !important;
   line-height: 1.15;
+  font-size: calc(1vw + 13px) !important;
 }
 
 .red-video__subtext {
@@ -84,25 +92,25 @@
   line-height: 1.15;
 }
 
-#elementor .elementor-element .uael-video__content .red-video__text,
-.elementor-element .uael-video__content .red-video__text {
+#elementor .elementor-element .uael-video__content .red-video__play,
+.elementor-element .uael-video__content .red-video__play {
   width: auto !important;
   /* margin-top: 6px; */
 }
 
-#elementor .elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-arrow i,
-.elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-arrow i {
+#elementor .elementor-widget-red-video-gallery .slick-slider button.slick-arrow i,
+.elementor-widget-red-video-gallery .slick-slider button.slick-arrow i {
   display: block;
 }
 
-#elementor .elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-arrow i img,
-.elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-arrow i img {
+#elementor .elementor-widget-red-video-gallery .slick-slider button.slick-arrow i img,
+.elementor-widget-red-video-gallery .slick-slider button.slick-arrow i img {
   width: 100%;
   height: 100%;
 }
 
-#elementor .elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-next i img,
-.elementor-widget-red-video-gallery.elementor-element-f4f1676 .slick-slider button.slick-next i img {
+#elementor .elementor-widget-red-video-gallery .slick-slider button.slick-next i img,
+.elementor-widget-red-video-gallery .slick-slider button.slick-next i img {
   transform: scaleX(-1);
 }
 

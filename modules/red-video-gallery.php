@@ -1274,11 +1274,11 @@ class Red_Video_Gallery extends Common_Widget {
 						],
 					],
 					'selectors'      => [
-						'{{WRAPPER}} .uael-video__content i, {{WRAPPER}} .uael-video__content .uael-vg__play' => 'font-size: {{SIZE}}px;line-height: {{SIZE}}px;height: {{SIZE}}px;width: {{SIZE}}px;',
-						'{{WRAPPER}} .uael-video__content img.uael-vg__play-image, {{WRAPPER}} .uael-video__content .uael-vg__play' => 'width: {{SIZE}}px;',
-						'{{WRAPPER}} .uael-vg__play i.uael-vg__play-icon' => 'font-size: {{SIZE}}px;line-height: {{SIZE}}px;height: {{SIZE}}px;width: {{SIZE}}px;',
-						'{{WRAPPER}} .uael-vg__play img.uael-vg__play-image' => 'width: {{SIZE}}px;',
-						'{{WRAPPER}} .uael-vg__play' => 'width: {{SIZE}}px;',
+						'{{WRAPPER}} .uael-video__content i, {{WRAPPER}} .uael-video__content .uael-vg__play' => 'font-size: {{SIZE}}px;line-height: {{SIZE}}px;height: {{SIZE}}px;width: {{SIZE}}px; min-width: {{SIZE}}px;',
+						'{{WRAPPER}} .uael-video__content img.uael-vg__play-image, {{WRAPPER}} .uael-video__content .uael-vg__play' => 'width: {{SIZE}}px; min-width: {{SIZE}}px;',
+						'{{WRAPPER}} .uael-vg__play i.uael-vg__play-icon' => 'font-size: {{SIZE}}px;line-height: {{SIZE}}px;height: {{SIZE}}px;width: {{SIZE}}px; min-width: {{SIZE}}px;',
+						'{{WRAPPER}} .uael-vg__play img.uael-vg__play-image' => 'width: {{SIZE}}px; min-width: {{SIZE}}px;',
+						'{{WRAPPER}} .uael-vg__play' => 'width: {{SIZE}}px; min-width: {{SIZE}}px;',
 					],
 				]
 			);
@@ -2242,7 +2242,7 @@ class Red_Video_Gallery extends Common_Widget {
 			$this->add_render_attribute(
 				'video-grid-item' . $index,
 				[
-					'class' => 'uael-vg__play red-video__text',
+					'class' => 'uael-vg__play red-video__play',
 				]
 			);
 
@@ -2282,7 +2282,7 @@ class Red_Video_Gallery extends Common_Widget {
 									</div>
 								<!-- </div> -->
 
-								<div>
+								<div class="red-video__text">
 									<?php $this->get_caption( $item ); ?>
 									<?php $this->get_subtext( $item ); ?>
 								</div>
