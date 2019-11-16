@@ -2632,6 +2632,8 @@ class RedSwitcher extends Extras_Widget {
 	 */
 	public function render_arrows() {
 
+		$settings = $this->get_settings_for_display();
+
 		$this->add_render_attribute( [
 			'arrows' => [
 				'class' => 'ee-switcher__arrows',
@@ -2659,18 +2661,80 @@ class RedSwitcher extends Extras_Widget {
 		?>
 
 		<div class="ee-switcher__arrows-container">
-			<?php /*
-			// Need to figure out how to integrate this
-			foreach ( $settings['items'] as $index => $item ) { ?>
-				<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">1/12</span></div>
-			<?php } */ ?>
-			<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">1/12</span></div>
+
+			<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">
+				<span class="current-number">1</span>/<?php echo count( $settings['items'] ); ?></span>
+			</div>
+
 			<ul <?php echo $this->get_render_attribute_string( 'arrows' ); ?>>
 				<li <?php echo $this->get_render_attribute_string( 'arrow-prev' ); ?>>
 					<i <?php echo $this->get_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
 				</li>
 				<li <?php echo $this->get_render_attribute_string( 'arrow-next' ); ?>>
 					<i <?php echo $this->get_render_attribute_string( 'arrow-next-icon' ); ?>></i>
+
+					<svg x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve" class="ee-arrow__svg">
+						<defs>
+							<clipPath id="clipLoader<?php echo $this->get_id(); ?>">
+								<circle cx="40" cy="40" r="40"/>
+							</clipPath>
+						</defs>
+						<circle transform="rotate(-90 40 40)" class="ee-arrow__circle--loader" stroke-dasharray="227" stroke-dashoffset="227" cx="40" cy="40" r="40" fill="transparent" stroke="transparent" stroke-width="4" vector-effect="non-scaling-stroke" clip-path="url(#clipLoader<?php echo $this->get_id(); ?>)" />
+					</svg>
+				</li>
+			</ul>
+		</div><?php
+	}
+
+	/**
+	 * Arrows Template (For JavaScript)
+	 *
+	 * @since  1.9.0
+	 * @return void
+	 */
+	public function _arrows_template() {
+
+		// $settings = $this->get_settings_for_display();
+
+		$this->add_render_attribute( [
+			'arrows' => [
+				'class' => 'ee-switcher__arrows',
+			],
+			'arrow-prev' => [
+				'class' => [
+					'ee-arrow',
+					'ee-arrow--prev',
+				],
+			],
+			'arrow-prev-icon' => [
+				'class' => 'icomoon-arrow-thin red-image-reverse',
+			],
+			'arrow-next' => [
+				'class' => [
+					'ee-arrow',
+					'ee-arrow--next',
+				],
+			],
+			'arrow-next-icon' => [
+				'class' => 'icomoon-arrow-thin',
+			],
+		] );
+
+		?>
+
+		<div class="ee-switcher__arrows-container">
+
+			<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">
+				<span class="current-number">1</span>/<# settings.items.length #></span>
+			</div>
+
+			<ul <?php echo $this->get_render_attribute_string( 'arrows' ); ?>>
+				<li <?php echo $this->get_render_attribute_string( 'arrow-prev' ); ?>>
+					<i <?php echo $this->get_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
+				</li>
+				<li <?php echo $this->get_render_attribute_string( 'arrow-next' ); ?>>
+					<i <?php echo $this->get_render_attribute_string( 'arrow-next-icon' ); ?>></i>
+
 					<svg x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve" class="ee-arrow__svg">
 						<defs>
 							<clipPath id="clipLoader<?php echo $this->get_id(); ?>">
@@ -2752,7 +2816,7 @@ class RedSwitcher extends Extras_Widget {
 				<div {{{ view.getRenderAttributeString( 'switcher-content-wrapper' ) }}}>
 					<div {{{ view.getRenderAttributeString( 'switcher-content' ) }}}>
 						<?php
-						$this->render_arrows();
+						$this->_arrows_template();
 						$this->_titles_loop_template();
 						$this->_descriptions_loop_template();
 						// $this->_video_links_loop_template();

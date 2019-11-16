@@ -601,3 +601,44 @@
 	});
 
 }( jQuery ) );
+
+// Custom JS
+( function( $ ) {
+	$(document).ready(function() {
+
+		var slideNum = 1; // Starting slide position
+		var prevArrow = $('.ee-arrow--prev');
+		var nextArrow = $('.ee-arrow--next');
+		var arrows = $('.ee-switcher__arrows');
+		var animationTime = 2500; // 2.5 seconds
+
+		prevArrow.on('click', function(e) {
+			slideNum -= 1;
+			arrowPointerEvents();
+			updateGroupNumber(slideNum, e);
+		});
+		nextArrow.on('click', function(e) {
+			slideNum += 1;
+			arrowPointerEvents();
+			updateGroupNumber(slideNum, e);
+		});
+
+		// Helper Functions
+		function arrowPointerEvents() {
+			arrows.css('pointer-events', 'none');
+			setTimeout(function() {
+				arrows.css('pointer-events', 'auto');
+			}, animationTime);
+		}
+
+		// Update Switcher Functions
+		function updateGroupNumber(num, event) {
+			var container = $(event.target).closest('.elementor-widget-ee-red-switcher');
+			var currentNumber = container.find('.ee-switcher__group-number .current-number');
+			currentNumber.fadeOut();
+			currentNumber.text(num);
+			currentNumber.fadeIn();
+		}
+
+	});
+})(jQuery);
