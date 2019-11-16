@@ -2427,11 +2427,23 @@ class RedSwitcher extends Extras_Widget {
 
 		<div <?php echo $this->get_render_attribute_string( 'videos' ); ?>>
 			<?php foreach ( $settings['items'] as $index => $item ) {
+				$slide_num = $index + 1;
 
 				$video_link_tag = 'div';
 				$video_link_key = $this->get_repeater_setting_key( 'video_link', 'items', $index );
 
-				$this->add_render_attribute( $video_link_key, 'class', 'ee-switcher__videos__video' );
+				// $this->add_render_attribute( $video_link_key, 'class', 'ee-switcher__videos__video' );
+
+				$this->add_render_attribute( [
+					$video_link_key => [
+						'class' => [
+							'ee-switcher__videos__video'
+						],
+						'data-slide-num' => [
+							$slide_num
+						],
+					],
+				] );
 			?>
 
 			<<?php echo $video_link_tag; ?> <?php echo $this->get_render_attribute_string( $video_link_key ); ?>>

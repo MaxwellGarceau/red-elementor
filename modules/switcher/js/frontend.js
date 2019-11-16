@@ -606,22 +606,28 @@
 ( function( $ ) {
 	$(document).ready(function() {
 
+		// Variables
 		var slideNum = 1; // Starting slide position
 		var prevArrow = $('.ee-arrow--prev');
 		var nextArrow = $('.ee-arrow--next');
 		var arrows = $('.ee-switcher__arrows');
 		var animationTime = 2500; // 2.5 seconds
+		var activeClass = 'is--active';
 
+		// Event Handlers
 		prevArrow.on('click', function(e) {
 			slideNum -= 1;
 			arrowPointerEvents();
 			updateGroupNumber(slideNum, e);
+			updateVimeoLink(slideNum, e);
 		});
 		nextArrow.on('click', function(e) {
 			slideNum += 1;
 			arrowPointerEvents();
 			updateGroupNumber(slideNum, e);
+			updateVimeoLink(slideNum, e);
 		});
+		$('.ee-switcher__videos__video[data-slide-num="1"]').addClass(activeClass); // Adds .is--active class to first video in slider
 
 		// Helper Functions
 		function arrowPointerEvents() {
@@ -631,13 +637,31 @@
 			}, animationTime);
 		}
 
+		function getContainer(event) {
+			return $(event.target).closest('.elementor-widget-ee-red-switcher');
+		}
+
 		// Update Switcher Functions
 		function updateGroupNumber(num, event) {
-			var container = $(event.target).closest('.elementor-widget-ee-red-switcher');
+			var container = getContainer(event);
 			var currentNumber = container.find('.ee-switcher__group-number .current-number');
 			currentNumber.fadeOut();
 			currentNumber.text(num);
 			currentNumber.fadeIn();
+		}
+
+		function updateVimeoLink(num, event) {
+			var videos = $('.ee-switcher__videos__video');
+			var container = getContainer(event);
+			videos.removeClass(activeClass);
+
+			videos.each(function() {
+				var video = $(this);
+				if ( video.data('slideNum') == slideNum ) {
+					video.addClass(activeClass);
+				}
+			});
+
 		}
 
 	});

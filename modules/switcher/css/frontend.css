@@ -20,6 +20,19 @@
   font-weight: 500;
 }
 
+/* Video Transition effects */
+.ee-switcher__videos__video {
+  opacity: 0;
+  display: none;
+  transition: all 1s;
+}
+.ee-switcher__videos__video.is--active {
+  display: block;
+  opacity: 1;
+}
+
+/* Video Transition effects end */
+
 .ee-switcher__media-wrapper.ee-media--stretch .ee-media__thumbnail img {
   object-fit: contain;
 }
