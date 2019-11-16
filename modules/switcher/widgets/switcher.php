@@ -196,6 +196,28 @@ class RedSwitcher extends Extras_Widget {
 				);
 
 				$content->add_control(
+					'video_link_title',
+					[
+						'label' 		=> __( 'Video Link Title', 'elementor-extras' ),
+						'description'	=> __( 'Title for video link.', 'elementor-extras' ),
+						'dynamic' 		=> [ 'active' => true ],
+						'type' 			=> Controls_Manager::TEXT,
+						'default' 		=> 'Video Link',
+					]
+				);
+
+				$content->add_control(
+					'video_link',
+					[
+						'label' 		=> __( 'Video Link', 'elementor-extras' ),
+						'description'	=> __( 'Link to video.', 'elementor-extras' ),
+						'dynamic' 		=> [ 'active' => true ],
+						'type' 			=> Controls_Manager::URL,
+						'default' 		=> '',
+					]
+				);
+
+				$content->add_control(
 					'label',
 					[
 						'label' 	=> __( 'Label', 'elementor-extras' ),
@@ -2284,10 +2306,15 @@ class RedSwitcher extends Extras_Widget {
 				<div <?php echo $this->get_render_attribute_string( 'switcher-content-wrapper' ); ?>>
 					<div <?php echo $this->get_render_attribute_string( 'switcher-content' ); ?>>
 						<?php
+						$this->render_arrows();
+						echo '<hr>';
 						$this->render_titles_loop();
+						echo '<hr>';
 						$this->render_descriptions_loop();
-						$this->render_nav_loop();
-						$this->render_arrows(); ?>
+						echo '<hr>';
+						$this->render_video_links_loop();
+						echo '<hr>';
+						$this->render_nav_loop(); ?>
 					</div>
 				</div>
 
@@ -2377,6 +2404,39 @@ class RedSwitcher extends Extras_Widget {
 			<<?php echo $description_tag; ?> <?php echo $this->get_render_attribute_string( $description_key ); ?>>
 				<?php echo $item['description']; ?>
 			</<?php echo $description_tag; ?>>
+
+			<?php } ?>
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Render Video Link Loop
+	 *
+	 * @since  1.9.0
+	 * @return void
+	 */
+	public function render_video_links_loop() {
+
+		$settings = $this->get_settings_for_display();
+
+		$this->add_render_attribute( 'videos', 'class', 'ee-switcher__videos' );
+
+		?>
+
+		<div <?php echo $this->get_render_attribute_string( 'videos' ); ?>>
+			<?php foreach ( $settings['items'] as $index => $item ) {
+
+				$video_link_tag = 'div';
+				$video_link_key = $this->get_repeater_setting_key( 'video_link', 'items', $index );
+
+				$this->add_render_attribute( $video_link_key, 'class', 'ee-switcher__videos__video' );
+			?>
+
+			<<?php echo $video_link_tag; ?> <?php echo $this->get_render_attribute_string( $video_link_key ); ?>>
+				<a class="video-title" href="<?php echo $item['video_link']['url']; ?>" target="<?php echo $item['video_link']["is_external"] ? '_blank' : '_self'; ?>">> <?php echo $item['video_link_title']; ?></a>
+			</<?php echo $video_link_tag; ?>>
 
 			<?php } ?>
 		</div>
@@ -2583,7 +2643,7 @@ class RedSwitcher extends Extras_Widget {
 				],
 			],
 			'arrow-prev-icon' => [
-				'class' => 'eicon-chevron-left',
+				'class' => 'icomoon-arrow-thin red-image-reverse',
 			],
 			'arrow-next' => [
 				'class' => [
@@ -2592,28 +2652,36 @@ class RedSwitcher extends Extras_Widget {
 				],
 			],
 			'arrow-next-icon' => [
-				'class' => 'eicon-chevron-right',
+				'class' => 'icomoon-arrow-thin',
 			],
 		] );
 
 		?>
 
-		<ul <?php echo $this->get_render_attribute_string( 'arrows' ); ?>>
-			<li <?php echo $this->get_render_attribute_string( 'arrow-prev' ); ?>>
-				<i <?php echo $this->get_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
-			</li>
-			<li <?php echo $this->get_render_attribute_string( 'arrow-next' ); ?>>
-				<i <?php echo $this->get_render_attribute_string( 'arrow-next-icon' ); ?>></i>
-				<svg x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve" class="ee-arrow__svg">
-					<defs>
-						<clipPath id="clipLoader<?php echo $this->get_id(); ?>">
-							<circle cx="40" cy="40" r="40"/>
-						</clipPath>
-					</defs>
-					<circle transform="rotate(-90 40 40)" class="ee-arrow__circle--loader" stroke-dasharray="227" stroke-dashoffset="227" cx="40" cy="40" r="40" fill="transparent" stroke="transparent" stroke-width="4" vector-effect="non-scaling-stroke" clip-path="url(#clipLoader<?php echo $this->get_id(); ?>)" />
-				</svg>
-			</li>
-		</ul><?php
+		<div class="ee-switcher__arrows-container">
+			<?php /*
+			// Need to figure out how to integrate this
+			foreach ( $settings['items'] as $index => $item ) { ?>
+				<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">1/12</span></div>
+			<?php } */ ?>
+			<div class="ee-switcher__group">Group <span class="ee-switcher__group-number">1/12</span></div>
+			<ul <?php echo $this->get_render_attribute_string( 'arrows' ); ?>>
+				<li <?php echo $this->get_render_attribute_string( 'arrow-prev' ); ?>>
+					<i <?php echo $this->get_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
+				</li>
+				<li <?php echo $this->get_render_attribute_string( 'arrow-next' ); ?>>
+					<i <?php echo $this->get_render_attribute_string( 'arrow-next-icon' ); ?>></i>
+					<svg x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve" class="ee-arrow__svg">
+						<defs>
+							<clipPath id="clipLoader<?php echo $this->get_id(); ?>">
+								<circle cx="40" cy="40" r="40"/>
+							</clipPath>
+						</defs>
+						<circle transform="rotate(-90 40 40)" class="ee-arrow__circle--loader" stroke-dasharray="227" stroke-dashoffset="227" cx="40" cy="40" r="40" fill="transparent" stroke="transparent" stroke-width="4" vector-effect="non-scaling-stroke" clip-path="url(#clipLoader<?php echo $this->get_id(); ?>)" />
+					</svg>
+				</li>
+			</ul>
+		</div><?php
 	}
 
 	/**
@@ -2684,10 +2752,11 @@ class RedSwitcher extends Extras_Widget {
 				<div {{{ view.getRenderAttributeString( 'switcher-content-wrapper' ) }}}>
 					<div {{{ view.getRenderAttributeString( 'switcher-content' ) }}}>
 						<?php
+						$this->render_arrows();
 						$this->_titles_loop_template();
 						$this->_descriptions_loop_template();
-						$this->_nav_loop_template();
-						$this->render_arrows(); ?>
+						// $this->_video_links_loop_template();
+						$this->_nav_loop_template(); ?>
 					</div>
 				</div>
 
@@ -2806,6 +2875,36 @@ class RedSwitcher extends Extras_Widget {
 
 		<?php
 	}
+
+	/**
+	 * Descriptions Loop Template
+	 *
+	 * @since  1.9.0
+	 * @return void
+	 */
+	/*public function _video_links_loop_template() { ?><#
+
+		view.addRenderAttribute( 'videos', 'class', 'ee-switcher__videos' );
+
+		#><div {{{ view.getRenderAttributeString( 'videos' ) }}}>
+			<# _.each( settings.items, function( item, index ) {
+
+				var videoTag 	= 'div',
+					videoKey 	= view.getRepeaterSettingKey( 'video', 'items', index );
+
+				view.addRenderAttribute( videoKey, 'class', 'ee-switcher__videos__video' );
+
+			#>
+
+			<{{{ videoTag }}} {{{ view.getRenderAttributeString( videoKey ) }}}>
+				{{ item.video }}
+			</{{{ videoTag }}}>
+
+			<# }); #>
+		</div>
+
+		<?php
+	} */
 
 	/**
 	 * Media Loop Template
