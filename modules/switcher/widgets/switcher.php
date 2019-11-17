@@ -195,21 +195,85 @@ class RedSwitcher extends Extras_Widget {
 					]
 				);
 
-				$content->add_control(
-					'video_link_title',
-					[
-						'label' 		=> __( 'Video Link Title', 'elementor-extras' ),
-						'description'	=> __( 'Title for video link.', 'elementor-extras' ),
-						'dynamic' 		=> [ 'active' => true ],
-						'type' 			=> Controls_Manager::TEXT,
-						'default' 		=> 'Video Link',
-					]
-				);
+				// $content->add_control(
+				// 	'video_link_title',
+				// 	[
+				// 		'label' 		=> __( 'Video Link Title', 'elementor-extras' ),
+				// 		'description'	=> __( 'Title for video link.', 'elementor-extras' ),
+				// 		'dynamic' 		=> [ 'active' => true ],
+				// 		'type' 			=> Controls_Manager::TEXT,
+				// 		'default' 		=> 'Video Link',
+				// 	]
+				// );
 
 				$content->add_control(
 					'video_link',
 					[
 						'label' 		=> __( 'Video Link', 'elementor-extras' ),
+						'description'	=> __( 'Link to video.', 'elementor-extras' ),
+						'dynamic' 		=> [ 'active' => true ],
+						'type' 			=> Controls_Manager::URL,
+						'default' 		=> '',
+					]
+				);
+
+				// $content->add_control(
+				// 	'video_link_title_2',
+				// 	[
+				// 		'label' 		=> __( 'Video Link Title 2', 'elementor-extras' ),
+				// 		'description'	=> __( 'Title for video link.', 'elementor-extras' ),
+				// 		'dynamic' 		=> [ 'active' => true ],
+				// 		'type' 			=> Controls_Manager::TEXT,
+				// 		'default' 		=> 'Video Link',
+				// 	]
+				// );
+
+				$content->add_control(
+					'video_link_2',
+					[
+						'label' 		=> __( 'Video Link 2', 'elementor-extras' ),
+						'description'	=> __( 'Link to video.', 'elementor-extras' ),
+						'dynamic' 		=> [ 'active' => true ],
+						'type' 			=> Controls_Manager::URL,
+						'default' 		=> '',
+					]
+				);
+
+				// $this->add_control(
+				// 	'list',
+				// 	[
+				// 		'label' => __( 'Repeater List', 'plugin-domain' ),
+				// 		'type' => Controls_Manager::REPEATER,
+				// 		'fields' => $content->get_controls(),
+				// 		'default' => [
+				// 			[
+				// 				'list_title' => __( 'Title #1', 'plugin-domain' ),
+				// 				'list_content' => __( 'Item content. Click the edit button to change this text.', 'plugin-domain' ),
+				// 			],
+				// 			[
+				// 				'list_title' => __( 'Title #2', 'plugin-domain' ),
+				// 				'list_content' => __( 'Item content. Click the edit button to change this text.', 'plugin-domain' ),
+				// 			],
+				// 		],
+				// 		'title_field' => '{{{ list_title }}}',
+				// 	]
+				// );
+
+				$content->add_control(
+					'video_link_3',
+					[
+						'label' 		=> __( 'Video Link 3', 'elementor-extras' ),
+						'description'	=> __( 'Link to video.', 'elementor-extras' ),
+						'dynamic' 		=> [ 'active' => true ],
+						'type' 			=> Controls_Manager::URL,
+						'default' 		=> '',
+					]
+				);
+
+				$content->add_control(
+					'video_link_4',
+					[
+						'label' 		=> __( 'Video Link 4', 'elementor-extras' ),
 						'description'	=> __( 'Link to video.', 'elementor-extras' ),
 						'dynamic' 		=> [ 'active' => true ],
 						'type' 			=> Controls_Manager::URL,
@@ -2447,7 +2511,14 @@ class RedSwitcher extends Extras_Widget {
 			?>
 
 			<<?php echo $video_link_tag; ?> <?php echo $this->get_render_attribute_string( $video_link_key ); ?>>
-				<a class="video-title" href="<?php echo $item['video_link']['url']; ?>" target="<?php echo $item['video_link']["is_external"] ? '_blank' : '_self'; ?>">> <?php echo $item['video_link_title']; ?></a>
+				<a class="video-title" href="<?php echo $item['video_link']['url']; ?>" target="<?php echo $item['video_link']["is_external"] ? '_blank' : '_self'; ?>">> <?php echo $item['video_link']['url']; ?></a>
+
+				<?php if ( $item['video_link_2']['url'] != '' ) { ?>
+					<a class="video-title" href="<?php echo $item['video_link_2']['url']; ?>" target="<?php echo $item['video_link_2']["is_external"] ? '_blank' : '_self'; ?>">
+						<hr>> <?php echo $item['video_link_2']['url']; ?>
+					</a>
+				<?php } ?>
+
 			</<?php echo $video_link_tag; ?>>
 
 			<?php } ?>

@@ -299,6 +299,76 @@
 
 			ee.Switcher.maybeDestroy();
 			ee.Switcher.init();
+
+			/*****************
+			 * Custom JS
+			 *****************/
+			$(document).ready(function() {
+
+				// Variables
+				// var scopeId = ee.getUniqueScopeId($('.elementor-widget-ee-red-switcher'));
+				var slideNum = 1; // Starting slide position
+				// var prevArrow = $('.ee-arrow--prev');
+				var prevArrow = $scope.find('.ee-arrow--prev');
+				// var nextArrow = $('.ee-arrow--next');
+				var nextArrow = $scope.find('.ee-arrow--next');
+				// var arrows = $('.ee-switcher__arrows');
+				var arrows = $scope.find('.ee-switcher__arrows');
+				var animationTime = 2500; // 2.5 seconds
+				var activeClass = 'is--active';
+
+				// Event Handlers
+				prevArrow.on('click', function(e) {
+					slideNum -= 1;
+					arrowPointerEvents();
+					updateGroupNumber(slideNum, e);
+					updateVimeoLink(slideNum, e);
+				});
+				nextArrow.on('click', function(e) {
+					slideNum += 1;
+					arrowPointerEvents();
+					updateGroupNumber(slideNum, e);
+					updateVimeoLink(slideNum, e);
+				});
+				$('.ee-switcher__videos__video[data-slide-num="1"]').addClass(activeClass); // Adds .is--active class to first video in slider
+
+				// Helper Functions
+				function arrowPointerEvents() {
+					arrows.css('pointer-events', 'none');
+					setTimeout(function() {
+						arrows.css('pointer-events', 'auto');
+					}, animationTime);
+				}
+
+				function getContainer(event) {
+					return $(event.target).closest('.elementor-widget-ee-red-switcher');
+				}
+
+				// Update Switcher Functions
+				function updateGroupNumber(num, event) {
+					var container = getContainer(event);
+					var currentNumber = container.find('.ee-switcher__group-number .current-number');
+					currentNumber.fadeOut();
+					currentNumber.text(num);
+					currentNumber.fadeIn();
+				}
+
+				function updateVimeoLink(num, event) {
+					var videos = $('.ee-switcher__videos__video');
+					var container = getContainer(event);
+					videos.removeClass(activeClass);
+
+					videos.each(function() {
+						var video = $(this);
+						if ( video.data('slideNum') == slideNum ) {
+							video.addClass(activeClass);
+						}
+					});
+
+				}
+
+			});
+
 		},
 	};
 
@@ -602,67 +672,69 @@
 
 }( jQuery ) );
 
-// Custom JS
-( function( $ ) {
-	$(document).ready(function() {
-
-		// Variables
-		var slideNum = 1; // Starting slide position
-		var prevArrow = $('.ee-arrow--prev');
-		var nextArrow = $('.ee-arrow--next');
-		var arrows = $('.ee-switcher__arrows');
-		var animationTime = 2500; // 2.5 seconds
-		var activeClass = 'is--active';
-
-		// Event Handlers
-		prevArrow.on('click', function(e) {
-			slideNum -= 1;
-			arrowPointerEvents();
-			updateGroupNumber(slideNum, e);
-			updateVimeoLink(slideNum, e);
-		});
-		nextArrow.on('click', function(e) {
-			slideNum += 1;
-			arrowPointerEvents();
-			updateGroupNumber(slideNum, e);
-			updateVimeoLink(slideNum, e);
-		});
-		$('.ee-switcher__videos__video[data-slide-num="1"]').addClass(activeClass); // Adds .is--active class to first video in slider
-
-		// Helper Functions
-		function arrowPointerEvents() {
-			arrows.css('pointer-events', 'none');
-			setTimeout(function() {
-				arrows.css('pointer-events', 'auto');
-			}, animationTime);
-		}
-
-		function getContainer(event) {
-			return $(event.target).closest('.elementor-widget-ee-red-switcher');
-		}
-
-		// Update Switcher Functions
-		function updateGroupNumber(num, event) {
-			var container = getContainer(event);
-			var currentNumber = container.find('.ee-switcher__group-number .current-number');
-			currentNumber.fadeOut();
-			currentNumber.text(num);
-			currentNumber.fadeIn();
-		}
-
-		function updateVimeoLink(num, event) {
-			var videos = $('.ee-switcher__videos__video');
-			var container = getContainer(event);
-			videos.removeClass(activeClass);
-
-			videos.each(function() {
-				var video = $(this);
-				if ( video.data('slideNum') == slideNum ) {
-					video.addClass(activeClass);
-				}
-			});
-
-		}
-
-	});
-})(jQuery);
+// // Custom JS
+// ( function( $ ) {
+// 	$(document).ready(function() {
+//
+// 		console.log('scopeId', ee.getUniqueScopeId($('.elementor-widget-ee-red-switcher')))
+//
+// 		// Variables
+// 		var slideNum = 1; // Starting slide position
+// 		var prevArrow = $('.ee-arrow--prev');
+// 		var nextArrow = $('.ee-arrow--next');
+// 		var arrows = $('.ee-switcher__arrows');
+// 		var animationTime = 2500; // 2.5 seconds
+// 		var activeClass = 'is--active';
+//
+// 		// Event Handlers
+// 		prevArrow.on('click', function(e) {
+// 			slideNum -= 1;
+// 			arrowPointerEvents();
+// 			updateGroupNumber(slideNum, e);
+// 			updateVimeoLink(slideNum, e);
+// 		});
+// 		nextArrow.on('click', function(e) {
+// 			slideNum += 1;
+// 			arrowPointerEvents();
+// 			updateGroupNumber(slideNum, e);
+// 			updateVimeoLink(slideNum, e);
+// 		});
+// 		$('.ee-switcher__videos__video[data-slide-num="1"]').addClass(activeClass); // Adds .is--active class to first video in slider
+//
+// 		// Helper Functions
+// 		function arrowPointerEvents() {
+// 			arrows.css('pointer-events', 'none');
+// 			setTimeout(function() {
+// 				arrows.css('pointer-events', 'auto');
+// 			}, animationTime);
+// 		}
+//
+// 		function getContainer(event) {
+// 			return $(event.target).closest('.elementor-widget-ee-red-switcher');
+// 		}
+//
+// 		// Update Switcher Functions
+// 		function updateGroupNumber(num, event) {
+// 			var container = getContainer(event);
+// 			var currentNumber = container.find('.ee-switcher__group-number .current-number');
+// 			currentNumber.fadeOut();
+// 			currentNumber.text(num);
+// 			currentNumber.fadeIn();
+// 		}
+//
+// 		function updateVimeoLink(num, event) {
+// 			var videos = $('.ee-switcher__videos__video');
+// 			var container = getContainer(event);
+// 			videos.removeClass(activeClass);
+//
+// 			videos.each(function() {
+// 				var video = $(this);
+// 				if ( video.data('slideNum') == slideNum ) {
+// 					video.addClass(activeClass);
+// 				}
+// 			});
+//
+// 		}
+//
+// 	});
+// })(jQuery);
